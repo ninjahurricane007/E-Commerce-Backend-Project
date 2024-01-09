@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "target": "es2016",  //convert to es6
+      "module": "commonjs",  // Change to "commonjs" instead of "NodeNext"
+      "outDir": "./dist",  //
+      "strict": true,  //type chek
+      "esModuleInterop": true,  //accept modules
+      "moduleResolution": "node",
+      "allowImportingTsExtensions": true,
+      "noEmit": true,
+    },
+    "include": ["src/**/*.ts","types/**/*.ts"],
+    "exclude": ["node_modules", "dist"]
+  }

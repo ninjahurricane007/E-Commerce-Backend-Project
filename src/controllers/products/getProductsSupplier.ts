@@ -7,8 +7,8 @@ const getProductsSupplier=async(req:Request,res:Response):Promise<void>=>{
     try{
         const{supplier_id}=req.body.jwt_decoded
         const productCollections=db.collection('products')
-        const filter = new ObjectId(supplier_id as string)
-        const supplierDetails=await productCollections.find({ _id: filter }).toArray()
+
+        const supplierDetails=await productCollections.find({ userId:supplier_id }).toArray()
         res.status(200).json({Details:supplierDetails})
     }
     catch(error){

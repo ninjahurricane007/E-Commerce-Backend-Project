@@ -1,19 +1,5 @@
-import { Request, Response } from 'express';
 import EcSuppliers from '../../models/ec_suppliers'
-
-const getSupplierRegistration=async(req:Request,res:Response): Promise<void>=>{
-    try{
-        const {e_mail}=req.query;
-    await EcSuppliers.findOne({
-        where:{e_mail:e_mail}
-    ,raw:true});
-    res.status(201).json({message:`Email:${e_mail}`})
-}
-    catch(error:any){
-        console.log(error)
-        res.status(500).json({error:error.toString()})
-    }
-}
+import { Request, Response } from 'express';
 
 const postSupplierRegistration=async(req:Request,res:Response): Promise<void>=>{
     try{
@@ -32,5 +18,4 @@ const postSupplierRegistration=async(req:Request,res:Response): Promise<void>=>{
     }
 }
 
-export default getSupplierRegistration
-export {postSupplierRegistration}
+export default postSupplierRegistration

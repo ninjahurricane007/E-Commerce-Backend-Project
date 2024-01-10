@@ -1,13 +1,15 @@
 import express from 'express'; //to get router function from express
 import { Request, Response } from 'express';
-import getCustomerRegistration, { postCustomerRegistration } from '../controllers/customer/customerRegistration';
+
+import postCustomerRegistration from '../controllers/customer/customerRegistration';
 import patchResetPassword from '../controllers/authentication/reset_password';
 import { verifyToken } from '../middleware/verifyjwt';
+import getCustomerProfile from '../controllers/customer/customerProfile';
 
 const customerRouter = express.Router();
 
 customerRouter.get('/',async(req:Request,res:Response)=>{
-    getCustomerRegistration(req,res)
+    getCustomerProfile(req,res)
 })
 
 customerRouter.post('/',async(req:Request,res:Response)=>{

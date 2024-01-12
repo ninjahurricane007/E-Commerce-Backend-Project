@@ -1,7 +1,7 @@
 import express, { NextFunction } from 'express'
 import sequelize from '../src/config/sequelize-config.ts'
 import supplierRouter from './router/supplier_routes.ts'
-import customerRouter from './router/supplier_routes.ts'
+import customerRouter from './router/customer_routes.ts'
 import login from './router/login.ts'
 import {Request,Response} from 'express'
 import { firstExampleMW } from './middleware/middlewareExample.ts'
@@ -9,9 +9,28 @@ import { secondExampleMW } from './middleware/middlewareExample.ts'
 import sequelizeSync from './services/sequelize.ts'
 import { connectToMongoDb, stopMongoDb } from './services/mongodb.ts'
 import cors from 'cors'
+import { Server,Socket } from 'socket.io'
+import { createServer } from 'http'
+import initializeSocket from './services/socket.ts'
 
 const app=express() //app is an object of express class
+const server=createServer(app)
+const io=initializeSocket(server)
 const port=3000
+
+io.on('connection', (socket:Socket) => { //when handshake with client is completed connection event is triggered
+    console.log('a user connected')
+
+    socket.emit("event emmited", "Hello from backend")
+
+    socket.on('out of stock emit received',()=>{
+        console.log("Received from front end also")
+    })
+
+    socket.on('disconnect',()=>{
+        console.log("User disconnected")
+    })
+  });
 
 const corsOption = {
     Accept: 'application/json, text/html',
@@ -65,6 +84,10 @@ app.listen(port,()=>{
     console.log(`Listening to port ${port}`)
 })
 
+server.listen(3001,()=>{
+    console.log(`Socket Listening ${port}`)
+})
+
 process.on("SIGINT",()=>{
     sequelize.close(); stopMongoDb();
     process.exit() //process is the instance of node running on machine
@@ -73,4 +96,6 @@ process.on("SIGINT",()=>{
 process.on("exit",()=>{
     sequelize.close(); stopMongoDb();
 })
+
+export default io
 

@@ -15,7 +15,6 @@ const getProduct=async(req:Request,res:Response):Promise<void>=>{
     catch(error){
         res.status(500).json({error:error})
     }
-    
 }
 
 export default getProduct

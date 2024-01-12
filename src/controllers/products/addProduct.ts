@@ -1,6 +1,6 @@
 import {client} from '../../services/mongodb'
 import {Request, Response} from 'express'
-import { MongoClient, ServerApiVersion, Db } from 'mongodb';
+import { Db } from 'mongodb';
 
 const db: Db=client.db('e-commerce')
 const addProducts=async (req:Request,res:Response):Promise<any>=>{
